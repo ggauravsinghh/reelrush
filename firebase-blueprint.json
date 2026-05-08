@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user profile information and settings.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Download": {
+      "title": "Download History",
+      "description": "Stores record of user video downloads.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "title": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "platform": { "type": "string" },
+        "downloadedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "videoUrl", "downloadedAt"]
+    },
+    "Analytics": {
+      "title": "Application Analytics",
+      "description": "General stats for the admin panel.",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "totalDownloads": { "type": "number" },
+        "activeUsers": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Individual user profiles."
+    },
+    "downloads/{downloadId}": {
+      "schema": "Download",
+      "description": "Global download records."
+    },
+    "analytics/{dayId}": {
+      "schema": "Analytics",
+      "description": "Daily analytics data."
+    }
+  }
+}
